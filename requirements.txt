@@ -1,0 +1,16 @@
+# 2026 高教社杯全国大学生数学建模竞赛 A 题　药材的烘干问题
+# 代码与数据包的全部第三方依赖（只有四个）
+#
+#   numpy       数值计算（两个求解器、全部结果处理）
+#   openpyxl    生成/读取 result1-4.xlsx 与两个附件
+#   matplotlib  画论文的全部插图
+#   seaborn     仅被 代码/figlib/figstyle.py 用来设主题与调色板
+#
+# 除这四个之外没有别的运行时依赖：不需要 Node.js，不需要任何 Codex 运行时，
+# 也不需要 LaTeX（只有生成论文 PDF 才需要，见文末说明）。
+#
+# 想完全复刻出包时用的版本，见 requirements-lock.txt。
+numpy>=1.24
+openpyxl>=3.1
+matplotlib>=3.7
+seaborn>=0.12

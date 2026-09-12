@@ -1,0 +1,31 @@
+# ---- 虚拟环境与 Python 缓存 ----
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ---- macOS ----
+.DS_Store
+._*
+
+# ---- 求解中间产物（可由 代码/solve_p1.py、run_all.py、prepare_outputs.py 重新生成） ----
+输出/*.bin
+输出/result1_data.json
+输出/result1_data.npz
+输出/result23_data.npz
+输出/result4_data.npz
+输出/*.inspect.ndjson
+
+# 问题四"不收缩对照解"单个文件就有 135 MB，超过 GitHub 单文件 100 MB 的硬限制，
+# 由 代码/prepare_figure_data.py 现场重算（约 8 分钟），因此不入库。
+# 其余 figdata 体积很小，入库以保证插图可以脱离求解器单独重绘。
+输出/figdata/p4_noshrink.npz
+
+# ---- 编辑器与临时文件 ----
+tmp/
+temp/
+*.tmp
+.vscode/
+.idea/

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """问题三的第三种水分方程口径：干基密度守恒。
 
-论文表 14 列了三种口径，但 `p23_variants.py` 只实现了前两种（经典 Fick 与
+论文表 11 列了三种口径，但 `p23_variants.py` 只实现了前两种（经典 Fick 与
 体积密度守恒），第三行 "变密度守恒口径（等效 D→(1+C)D）→ 51.39 h" 一直
 没有对应的实现，属于"文中有数、代码无源"。本脚本把它补上。
 
@@ -61,7 +61,6 @@ def solve(form="rhod", n=100, dt=5.0, tend=259200.0, picard=8, tol=1e-11,
     temp = np.full(n + 1, base.T_INIT)
     conc = np.full(n + 1, base.C_INIT)
     n_steps = int(round(tend / dt))
-    adv = np.zeros(n + 1)
 
     for step in range(1, n_steps + 1):
         t_now = step * dt
@@ -96,7 +95,7 @@ def solve(form="rhod", n=100, dt=5.0, tend=259200.0, picard=8, tol=1e-11,
             lam = accum * weight * radius ** 2
             fc = dt * mass_face * xif / h
             lo, di, up, rhs = base._assemble(
-                lam, fc, adv, conc_old, alpha, c_inf, n)
+                lam, fc, conc_old, alpha, c_inf, n)
             conc_new = base.thomas(lo, di, up, rhs)
 
             # ---- 温度方程（三种口径完全相同）----
@@ -106,7 +105,7 @@ def solve(form="rhod", n=100, dt=5.0, tend=259200.0, picard=8, tol=1e-11,
             fc_t = dt * heat_face * xif / h
             alpha_t = dt * radius * base.H_HEAT
             lo_t, di_t, up_t, rhs_t = base._assemble(
-                lam_t, fc_t, adv, temp_old, alpha_t, t_inf, n)
+                lam_t, fc_t, temp_old, alpha_t, t_inf, n)
             temp_new = base.thomas(lo_t, di_t, up_t, rhs_t)
 
             change = max(float(np.max(np.abs(conc_new - conc))),
@@ -129,7 +128,8 @@ def main() -> None:
     ap.add_argument("--dt", type=float, default=5.0)
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--csv", default=None,
-                    help="把三种口径 × 两套网格的结果写成 CSV（默认写到 输出/问题三-三种口径对照.csv）")
+                    help="把三种口径 × 两套网格的结果写成 CSV"
+                         "（默认写到 输出/问题三-三种口径对照.csv）")
     args = ap.parse_args()
 
     if not args.all:

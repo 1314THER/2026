@@ -31,6 +31,7 @@ RSYNC_EXCL=(
   --exclude '__pycache__'
   --exclude '*.pyc'
   --exclude '.DS_Store'
+  --exclude '.gitignore'
   --exclude '.venv'
   --exclude '.git'
   --exclude '支撑材料.zip'

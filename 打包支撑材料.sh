@@ -42,8 +42,23 @@ fi
 rsync -a "${RSYNC_EXCL[@]}" ./ "$STAGE/"
 
 echo "==> 压缩"
+# 用 Python 的 zipfile 而不是 macOS 自带的 zip 命令：后者写中文文件名时
+# 不设置 UTF-8 标志位，在 Windows（GBK 代码页）上解压会变成乱码。
 rm -f "$OUT"
-( cd "$STAGE" && zip -qr "$OLDPWD/$OUT" . )
+python3 - "$OUT" "$STAGE" <<'PY'
+import os
+import sys
+import zipfile
+
+out, root = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames.sort()
+        for name in sorted(filenames):
+            full = os.path.join(dirpath, name)
+            z.write(full, os.path.relpath(full, root))
+print("zip 条目数: %d" % len(zipfile.ZipFile(out).infolist()))
+PY
 
 size_mb=$(du -m "$OUT" | awk '{print $1}')
 echo

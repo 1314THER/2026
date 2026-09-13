@@ -88,7 +88,7 @@ def main():
         fh.write(np.ascontiguousarray(conc4).astype("<f8").tobytes())
         fh.write(np.ascontiguousarray(surf4).astype("<f8").tobytes())
     print(
-        "result4: %d 行 x 21 列 + 药材表面（60 s 间隔，末年半径 %.4f cm）"
+        "result4: %d 行 x 21 列 + 药材表面（60 s 间隔，末态半径 %.4f cm）"
         % (len(t4), rad4[-1] * 100)
     )
 

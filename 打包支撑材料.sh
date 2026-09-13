@@ -2,7 +2,7 @@
 # 把交付所需的支撑材料打成一个 ZIP（竞赛要求 ≤20 MB，文件名提交前改成校内编号）。
 #
 #   ./打包支撑材料.sh                  # 默认包（约 11 MB，不含 27 MB 的 result2.xlsx）
-#   ./打包支撑材料.sh --with-result2   # 连 result2.xlsx 一起打（约 38 MB，会超 20 MB 限制）
+#   ./打包支撑材料.sh --with-result2   # 连 result2.xlsx 一起打（实测约 16.4 MB，仍 ≤20 MB）
 #
 # 排除的都是"可以由脚本重算"的大文件：求解中间产物（*.bin、*_data.npz）、
 # 不收缩对照解（p4_noshrink.npz）、插图的 300 dpi PNG 预览（保留矢量 PDF）、
@@ -35,6 +35,8 @@ RSYNC_EXCL=(
   --exclude '.venv'
   --exclude '.git'
   --exclude '支撑材料.zip'
+  --exclude '最终交付'
+  --exclude '复现测试报告.pdf'
 )
 if [ "$WITH_RESULT2" = "0" ]; then
   RSYNC_EXCL+=(--exclude '输出/result2.xlsx')

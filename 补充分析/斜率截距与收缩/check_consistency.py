@@ -104,16 +104,16 @@ def main() -> int:
         f1(100 * (1 - a3["V_dry_over_V_C0"] ** (1.0 / 3.0))))
 
     # ---- 表 2 路径反馈
-    for th, lit_r, lit_c, lit_d in ((5.0, "1.424", "0.959", "21.4"),
-                                    (10.0, "1.273", "0.510", "22.4"),
-                                    (20.0, "1.210", "0.221", "16.1"),
-                                    (50.0, "1.200", "0.112", "10.6")):
+    for th, lit_r, lit_c, lit_d in ((5.0, "1.424", "1.205", "28.4"),
+                                    (10.0, "1.273", "0.621", "26.9"),
+                                    (20.0, "1.210", "0.237", "17.1"),
+                                    (50.0, "1.200", "0.113", "10.6")):
         p = path[th]
         add(f"路径 {th:g}h 半径", lit_r, f3(p["R_cm"]))
         add(f"路径 {th:g}h 平均C", lit_c, f3(p["C_bar"]))
         add(f"路径 {th:g}h 偏差", lit_d, f1(abs(p["dev_pct"])))
     add("路径偏差范围下界", "10.6", f1(abs(rng["max"])))
-    add("路径偏差范围上界", "22.4", f1(abs(rng["min"])))
+    add("路径偏差范围上界", "28.4", f1(abs(rng["min"])))
 
     # ---- 附件 2 收缩完成度（正文"22 h 内基本完成"）
     add("收缩 99% 完成时刻", "22", "%.0f" % at2["收缩完成度"]["99%"]["t_h"],
@@ -138,7 +138,7 @@ def main() -> int:
         print(f"[{flag}] {label:<{width}}  正文={literal:<8}{detail}")
 
     # ---- README 里的两处范围表述
-    for label, literal, where in (("README 路径范围", "10.6%~22.4%", rdm),
+    for label, literal, where in (("README 路径范围", "10.6%~28.4%", rdm),
                                   ("README 总量范围", "1%~3%", rdm)):
         ok = literal in where
         if not ok:

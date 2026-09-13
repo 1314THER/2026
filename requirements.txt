@@ -14,3 +14,8 @@ numpy>=1.24
 openpyxl>=3.1
 matplotlib>=3.7
 seaborn>=0.12
+
+# 以下两个不是复现数据所必需的，只在生成提交版论文 PDF 时才用到：
+#   PyMuPDF (import fitz)  代码/make_delivery_pdf.py 用来把编译好的 PDF 缩放到 A4 + ≥2.5 cm 页边距
+#   LaTeX 引擎（Tectonic 或 TeX Live）  编译 论文/论文全文.tex
+# pip install pymupdf
